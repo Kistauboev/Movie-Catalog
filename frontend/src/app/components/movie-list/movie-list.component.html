@@ -1,0 +1,90 @@
+<div class="movie-list-container">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>🎬 Movie Catalog</h1>
+    </div>
+    <div class="navbar-menu">
+      <button class="btn-link" (click)="onViewFavorites()">❤️ Favorites</button>
+      <button class="btn-logout" (click)="onLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="search-section">
+    <div class="form-group">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search movies by title..."
+        class="search-input"
+      />
+      <button class="btn-search" (click)="onSearch()">Search</button>
+    </div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        [(ngModel)]="genreFilter"
+        placeholder="Filter by genre..."
+        class="search-input"
+      />
+      <button class="btn-search" (click)="onFilterByGenre()">Filter</button>
+    </div>
+
+    <div class="form-group">
+      <select [(ngModel)]="categoryFilter" class="search-input">
+        <option *ngFor="let option of categoryOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+      <input
+        type="number"
+        [(ngModel)]="yearFilter"
+        placeholder="Year (e.g. 2007)"
+        min="1900"
+        max="2100"
+        class="search-input year-input"
+      />
+      <button class="btn-search" (click)="onApplyAdvancedFilters()">
+        Apply
+      </button>
+      <button class="btn-reset" (click)="onResetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading movies...</div>
+
+  <div class="movies-grid">
+    <div class="movie-card" *ngFor="let movie of movies">
+      <button class="poster-button" (click)="onViewDetails(movie.id)">
+        <ng-container *ngIf="movie.poster_url; else noImage">
+          <img
+            [src]="movie.poster_url"
+            [alt]="movie.title"
+            class="movie-poster"
+            (error)="onPosterError(movie)"
+          />
+        </ng-container>
+        <ng-template #noImage>
+          <div class="movie-poster-placeholder">No Poster</div>
+        </ng-template>
+        <div class="poster-overlay">
+          <h3>{{ movie.title }}</h3>
+          <p>{{ movie.release_date | slice: 0 : 4 }} • {{ movie.genre }}</p>
+        </div>
+      </button>
+      <div class="movie-meta">
+        <span class="meta-chip">⭐ {{ movie.rating.toFixed(1) }}</span>
+        <span class="meta-chip">{{ movie.category | titlecase }}</span>
+        <span class="meta-chip">{{ movie.runtime }} min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" *ngIf="movies.length === 0 && !loading">
+    <p>No movies found. Try adjusting your search or filters.</p>
+  </div>
+</div>

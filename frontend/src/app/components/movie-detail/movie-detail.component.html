@@ -1,0 +1,137 @@
+<div
+  class="movie-detail-container"
+  [style.background-image]="getBackdropStyle()"
+>
+  <div class="loading" *ngIf="loading">Loading movie details...</div>
+
+  <ng-container *ngIf="!loading && movie">
+    <button class="btn-back" (click)="onGoBack()">← Back to Movies</button>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <div class="movie-hero">
+      <ng-container *ngIf="movie.poster_url; else noMovieImage">
+        <img
+          [src]="movie.poster_url"
+          [alt]="movie.title"
+          class="movie-poster"
+        />
+      </ng-container>
+      <ng-template #noMovieImage>
+        <div class="movie-poster-placeholder">No Image</div>
+      </ng-template>
+
+      <div class="movie-header">
+        <h1>{{ movie.title }}</h1>
+        <div class="meta">
+          <span class="year">{{ movie.release_date | slice: 0 : 4 }}</span>
+          <span class="category">{{ movie.category | titlecase }}</span>
+          <span class="runtime">{{ movie.runtime }} min</span>
+          <span class="genre">{{ movie.genre }}</span>
+        </div>
+
+        <div class="quick-stats">
+          <div class="stat-card">
+            <span class="stat-value">⭐ {{ movie.rating.toFixed(1) }}</span>
+            <span class="stat-label">IMDb Score</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">{{ movie.reviews_count }}</span>
+            <span class="stat-label">Reviews</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">{{ movie.favorites_count }}</span>
+            <span class="stat-label">Favorites</span>
+          </div>
+        </div>
+
+        <p class="director" *ngIf="movie.director">
+          <strong>Director:</strong> {{ movie.director }}
+        </p>
+
+        <p class="cast" *ngIf="movie.cast">
+          <strong>Cast:</strong> {{ movie.cast }}
+        </p>
+
+        <div class="button-group">
+          <button
+            class="btn-favorite"
+            *ngIf="!isFavorite"
+            (click)="onAddToFavorites()"
+          >
+            ❤️ Add to Favorites
+          </button>
+          <button
+            class="btn-favorite active"
+            *ngIf="isFavorite"
+            (click)="onRemoveFromFavorites()"
+          >
+            ❤️ In Favorites
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="movie-content">
+      <section class="description-section">
+        <h2>Description</h2>
+        <p>{{ movie.description }}</p>
+      </section>
+
+      <section class="review-section">
+        <h2>Audience Reviews</h2>
+
+        <div class="review-form">
+          <h3>Write your review</h3>
+          <div class="review-input-row">
+            <label for="rating">Rating</label>
+            <select id="rating" [(ngModel)]="newReviewRating">
+              <option *ngFor="let r of [1,2,3,4,5,6,7,8,9,10]" [value]="r">
+                {{ r }}/10
+              </option>
+            </select>
+          </div>
+          <textarea
+            [(ngModel)]="newReviewComment"
+            rows="4"
+            placeholder="Share your opinion about this movie..."
+          ></textarea>
+          <button class="btn-post-review" (click)="onSubmitReview()">
+            Post Review
+          </button>
+        </div>
+
+        <div *ngIf="reviews.length > 0; else noReviews">
+          <div class="reviews-list">
+            <div class="review-item" *ngFor="let review of reviews">
+              <div class="review-header">
+                <strong>{{ review.username }}</strong>
+                <span class="review-rating">⭐ {{ review.rating }}/10</span>
+              </div>
+              <p class="review-date">
+                {{ review.created_at | slice: 0 : 10 }}
+              </p>
+              <p class="review-comment">{{ review.comment }}</p>
+              <button
+                class="btn-delete-review"
+                *ngIf="canDeleteReview(review)"
+                (click)="onDeleteReview(review.id)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noReviews>
+          <p class="no-reviews">No reviews yet. Be the first to post one.</p>
+        </ng-template>
+      </section>
+    </div>
+  </ng-container>
+</div>

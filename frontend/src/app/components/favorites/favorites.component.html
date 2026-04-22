@@ -1,0 +1,71 @@
+<div class="favorites-container">
+  <button class="btn-back" (click)="onGoBack()">← Back to Movies</button>
+
+  <h1>❤️ My Favorite Movies</h1>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="success-message" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading favorites...</div>
+
+  <ng-container *ngIf="!loading && favorites.length > 0">
+    <div class="favorites-actions">
+      <button class="btn-clear" (click)="onClearAllFavorites()">
+        Clear All Favorites
+      </button>
+    </div>
+
+    <div class="favorites-grid">
+      <div class="favorite-card" *ngFor="let favorite of favorites">
+        <ng-container
+          *ngIf="favorite.movie_detail.poster_url; else noFavoriteImage"
+        >
+          <img
+            [src]="favorite.movie_detail.poster_url"
+            [alt]="favorite.movie_detail.title"
+            class="movie-poster"
+          />
+        </ng-container>
+        <ng-template #noFavoriteImage>
+          <div class="movie-poster-placeholder">No Image</div>
+        </ng-template>
+        <div class="movie-info">
+          <h3>{{ favorite.movie_detail.title }}</h3>
+          <p class="year">
+            {{ favorite.movie_detail.release_date | slice: 0 : 4 }}
+          </p>
+          <p class="genre">{{ favorite.movie_detail.genre }}</p>
+          <div class="rating">
+            <span class="stars"
+              >⭐ {{ favorite.movie_detail.rating.toFixed(1) }}</span
+            >
+          </div>
+          <p class="description">
+            {{ favorite.movie_detail.description | slice: 0 : 100 }}...
+          </p>
+          <div class="button-group">
+            <button class="btn-view" (click)="onViewMovie(favorite.movie)">
+              View Details
+            </button>
+            <button
+              class="btn-remove"
+              (click)="onRemoveFavorite(favorite.id, favorite.movie)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="no-favorites" *ngIf="!loading && favorites.length === 0">
+    <p>No favorite movies yet. Add some from the movie list!</p>
+    <button class="btn-browse" (click)="onGoBack()">Browse Movies</button>
+  </div>
+</div>

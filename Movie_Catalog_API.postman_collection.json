@@ -1,0 +1,690 @@
+{
+  "info": {
+    "_postman_id": "movie-catalog-api",
+    "name": "Movie Catalog API",
+    "description": "Complete API collection for Movie Catalog Application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/register/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "register", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Register Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"testpass123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/auth/register/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "auth", "register", ""]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"id\": 1,\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"is_staff\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/login/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "login", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Login Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"testpass123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/auth/login/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "auth", "login", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"user\": {\n    \"id\": 1,\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"is_staff\": false\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/logout/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "logout", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Logout Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/auth/logout/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "auth", "logout", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"message\": \"Logout successful\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "List All Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/movies/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "List Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Inception\",\n    \"description\": \"A thief who steals corporate secrets through the use of dream-sharing technology\",\n    \"release_date\": \"2010-07-16\",\n    \"poster_url\": \"https://example.com/poster.jpg\",\n    \"rating\": 8.8,\n    \"genre\": \"Science Fiction\",\n    \"director\": \"Christopher Nolan\",\n    \"cast\": \"Leonardo DiCaprio, Marion Cotillard\",\n    \"runtime\": 148,\n    \"imdb_id\": \"tt1375666\",\n    \"reviews_count\": 5,\n    \"favorites_count\": 10,\n    \"created_at\": \"2024-01-01T00:00:00Z\",\n    \"updated_at\": \"2024-01-01T00:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Search Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/movies/?search=Inception",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", ""],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Inception"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Search Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/?search=Inception",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", ""],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "Inception"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Inception\",\n    \"genre\": \"Science Fiction\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Filter by Genre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/movies/?genre=Science Fiction",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", ""],
+              "query": [
+                {
+                  "key": "genre",
+                  "value": "Science Fiction"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Filter Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/?genre=Science Fiction",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", ""],
+                  "query": [
+                    {
+                      "key": "genre",
+                      "value": "Science Fiction"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Inception\",\n    \"genre\": \"Science Fiction\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Movie by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/movies/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", "1", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Movie Detail Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/1/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", "1", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"id\": 1,\n  \"title\": \"Inception\",\n  \"description\": \"A thief who steals corporate secrets through the use of dream-sharing technology\",\n  \"release_date\": \"2010-07-16\",\n  \"poster_url\": \"https://example.com/poster.jpg\",\n  \"rating\": 8.8,\n  \"genre\": \"Science Fiction\",\n  \"director\": \"Christopher Nolan\",\n  \"cast\": \"Leonardo DiCaprio, Marion Cotillard\",\n  \"runtime\": 148,\n  \"imdb_id\": \"tt1375666\",\n  \"reviews_count\": 5,\n  \"favorites_count\": 10,\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"updated_at\": \"2024-01-01T00:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Matrix\",\n  \"description\": \"A computer programmer discovers that reality as he knows it is a simulation\",\n  \"release_date\": \"1999-03-31\",\n  \"poster_url\": \"https://example.com/matrix.jpg\",\n  \"rating\": 8.7,\n  \"genre\": \"Science Fiction\",\n  \"director\": \"The Wachowskis\",\n  \"cast\": \"Keanu Reeves, Laurence Fishburne\",\n  \"runtime\": 136,\n  \"imdb_id\": \"tt0133093\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/movies/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", ""]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"id\": 2,\n  \"title\": \"The Matrix\",\n  \"genre\": \"Science Fiction\",\n  \"rating\": 8.7\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Movie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception (Updated)\",\n  \"rating\": 9.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/movies/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", "1", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Success",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/1/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", "1", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"id\": 1,\n  \"title\": \"Inception (Updated)\",\n  \"rating\": 9.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Movie",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/movies/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "movies", "1", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete Success",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/movies/1/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "movies", "1", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"message\": \"Movie deleted successfully\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get User Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/reviews/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "reviews", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Reviews List",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/reviews/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "reviews", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"movie\": 1,\n    \"movie_title\": \"Inception\",\n    \"user\": 1,\n    \"username\": \"testuser\",\n    \"rating\": 9,\n    \"comment\": \"Mind-bending masterpiece!\",\n    \"created_at\": \"2024-01-01T00:00:00Z\",\n    \"updated_at\": \"2024-01-01T00:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movie\": 1,\n  \"rating\": 9,\n  \"comment\": \"Mind-bending masterpiece!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/reviews/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "reviews", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Review Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/reviews/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "reviews", ""]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"id\": 2,\n  \"movie\": 1,\n  \"user\": 1,\n  \"rating\": 9,\n  \"comment\": \"Mind-bending masterpiece!\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Favorites",
+      "item": [
+        {
+          "name": "Get Favorite Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/favorites/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "favorites", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Favorites List",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/favorites/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "favorites", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"movie\": 1,\n    \"movie_detail\": {\n      \"id\": 1,\n      \"title\": \"Inception\",\n      \"description\": \"A thief who steals corporate secrets\",\n      \"release_date\": \"2010-07-16\",\n      \"poster_url\": \"https://example.com/poster.jpg\",\n      \"rating\": 8.8,\n      \"genre\": \"Science Fiction\",\n      \"director\": \"Christopher Nolan\",\n      \"cast\": \"Leonardo DiCaprio\",\n      \"runtime\": 148,\n      \"imdb_id\": \"tt1375666\",\n      \"reviews_count\": 5,\n      \"favorites_count\": 10,\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\"\n    },\n    \"user\": 1,\n    \"added_at\": \"2024-01-01T00:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Add to Favorites",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movie_id\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/favorites/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "favorites", ""]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"movie_id\": 1\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/favorites/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "favorites", ""]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"id\": 1,\n  \"movie\": 1,\n  \"user\": 1,\n  \"added_at\": \"2024-01-01T00:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Remove from Favorites",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/favorites/?movie_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "favorites", ""],
+              "query": [
+                {
+                  "key": "movie_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Remove Success",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8000/api/favorites/?movie_id=1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8000",
+                  "path": ["api", "favorites", ""],
+                  "query": [
+                    {
+                      "key": "movie_id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"message\": \"Removed from favorites\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
