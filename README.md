@@ -12,7 +12,7 @@ Users can: • View a list of movies • Search movies by title • See detailed
 
 ⸻
 
-⚙️ Technologies Used • Angular • TypeScript • HTML / CSS Bootstrap or Angular Material OMDb API
+⚙️ Technologies Used • Angular • TypeScript • HTML / CSS Bootstrap
 
 ⸻
 
